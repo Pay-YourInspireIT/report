@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Report System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url(https://i.postimg.cc/W32mZGf2/Picsart-25-03-09-22-48-55-010.jpg);
+            background-size: cover;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Header and Navigation */
+        header {
+            /* From https://css.glass */
+background: rgba(255, 255, 255, 0.17);
+border-radius: 0 0 25% 25%;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.8px);
+-webkit-backdrop-filter: blur(3.8px);
+border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+
+header h1{
+    color: #3bff00;
+}
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            color: #3bff00;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Report Form */
+        .report-form {
+     /* From https://css.glass */
+background: rgba(255, 255, 255, 0.17);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.8px);
+-webkit-backdrop-filter: blur(3.8px);
+border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .report-form h2 {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ddd;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 95%;
+            padding: 0.75rem;
+            border: none;
+            background-color: #2c2c2c;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            background-color: #333;
+            outline: none;
+        }
+
+        .form-group input[type="file"] {
+            padding: 0.5rem;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* FAQ Section */
+        .faq {
+           /* From https://css.glass */
+background: rgba(255, 255, 255, 0.17);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.8px);
+-webkit-backdrop-filter: blur(3.8px);
+border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .faq h2 {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-answer {
+            padding: 0.5rem;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1e1e1e;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        main > * {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav li {
+                margin-bottom: 0.5rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .report-form,
+            .faq {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Payment Report System</h1>
+        <nav>
+            <ul>
+                <li><a href="https://pay-yourinspireit.github.io"><i class="fas fa-home"></i>&nbsp;  Home</a></li>
+            
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="report" class="report-form">
+            <h2>Report a Payment Issue</h2>
+            <form id="reportForm"  method="POST" enctype="multipart/form-data">
+                
+                <div class="form-group">
+                    <label for="name">Your Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div> 
+                <div class="form-group">
+                    <label for="number">Phone Number:</label>
+                    <input type="tel" id="number" name="number" required>
+                </div>
+                <div class="form-group">
+                    <label for="facebook_id">Facebook ID Link:</label>
+                    <input type="url" id="facebook_id" name="facebook_id">
+                </div>
+                <div class="form-group">
+                    <label for="report">Report Details:</label>
+                    <textarea id="report" name="report" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="file">Upload File (Image/Document) - Optional:</label>
+                    <input type="file" id="file" name="document" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                </div>
+                <button type="submit" class="submit-button"><i class="fas fa-paper-plane"></i> Submit Report</button>
+            </form>
+        </section>
+
+        <section id="faq" class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">What is this system for?</div>
+                <div class="faq-answer">This system is for reporting any issues you may have encountered with payments.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How do I submit a report?</div>
+                <div class="faq-answer">Fill out the form with your details, describe the issue, and upload any relevant files. Then, click the submit button.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What kind of files can I upload?</div>
+                <div class="faq-answer">You can upload images (JPEG, PNG) and documents (PDF, DOC, DOCX).</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        © 2022-2025 Your Inspire IT
+    </footer>
+
+    <script>
+       
+       document.addEventListener('DOMContentLoaded', function() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+
+     // Telegram Bot integration
+    const form = document.getElementById('reportForm');
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        // Function to send text message to Telegram
+        const sendTextMessage = async (message) => {
+            const textApiUrl = `https://api.telegram.org/bot8063347994:AAGv8iWVMOiataYffqLyzXVxFratPGNYaUs/sendMessage`; // Use sendMessage for text
+            const chatId = '7945358964'; // Ensure chatId is defined
+            try {
+                const textResponse = await fetch(textApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json' // Important for sendMessage
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML' // Optional: For formatting
+                    })
+                });
+
+                if (!textResponse.ok) {
+                    console.error('Telegram Text API error:', textResponse.status, textResponse.statusText);
+                } else {
+                    const textJson = await textResponse.json();
+                    if (textJson.ok === false) {
+                        console.error('Telegram Text API JSON error:', textJson);
+                    }
+                }
+            } catch (textError) {
+                console.error('Telegram Text API Fetch error:', textError);
+            }
+        };
+
+         // Function to send document (file) to Telegram
+        const sendDocumentMessage = async (formData) => {
+            const documentApiUrl = `https://api.telegram.org/bot8063347994:AAGv8iWVMOiataYffqLyzXVxFratPGNYaUs/sendDocument`;
+            const chatId = '7945358964';
+
+            formData.append('chat_id', chatId); // Add chatId to form data
+
+            try {
+                const documentResponse = await fetch(documentApiUrl, {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!documentResponse.ok) {
+                    console.error('Telegram Document API error:', documentResponse.status, documentResponse.statusText);
+                    return false; // Indicate failure
+                }
+
+                const documentJson = await documentResponse.json();
+                if (documentJson.ok === false) {
+                    console.error('Telegram Document API JSON error:', documentJson);
+                    return false; // Indicate failure
+                }
+
+                return true; // Indicate success
+
+            } catch (documentError) {
+                console.error('Telegram Document API Fetch error:', documentError);
+                return false; // Indicate failure
+            }
+        };
+
+
+        // Create a text message to send
+        let messageText = "<b>New Payment Report Received:</b>\n";
+        messageText += `<b>Name:</b> ${formData.get('name')}\n`;
+        messageText += `<b>Number:</b> ${formData.get('number')}\n`;
+        messageText += `<b>Facebook ID:</b> ${formData.get('facebook_id')}\n`;
+        messageText += `<b>Report:</b> ${formData.get('report')}\n`;
+
+        const fileInput = document.getElementById('file');
+        if (fileInput.files.length > 0) {
+            messageText += "<b>File:</b> Attached document\n";
+        } else {
+            messageText += "<b>File:</b> No file attached\n";
+        }
+
+
+        //TRY CATCH START
+        try {
+            // Send the text message
+            await sendTextMessage(messageText);
+            let fileSentSuccessfully = true;
+
+            // Send the document (if there is one)
+            if (fileInput.files.length > 0) {
+                //Create new form data
+                const documentFormData = new FormData();
+                documentFormData.append('chat_id', '7945358964');
+                documentFormData.append('document', fileInput.files[0]);
+                fileSentSuccessfully = await sendDocumentMessage(documentFormData);
+            }
+
+             if (!fileSentSuccessfully) {
+                    alert('Report submitted successfully, but file upload failed. Please try again with the file.');
+                } else {
+                     alert('Report submitted successfully!');
+                }
+              form.reset();
+
+        } catch (error) {
+            console.error('An error occurred:', error);
+            alert('An error occurred while submitting the report. Please try again.');
+        }
+         //TRY CATCH END
+    });
+});
+       
+    </script>
+</body>
+</html>
